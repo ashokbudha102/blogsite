@@ -1,5 +1,12 @@
 asgiref==3.2.10
 Django==3.1.2
+django-ckeditor==6.0.0
+django-crispy-forms==1.9.2
+django-filebrowser==3.13.1
+django-grappelli==2.14.2
+django-js-asset==1.2.2
+jsmin==2.2.2
 Pillow==8.0.1
 pytz==2020.1
+six==1.15.0
 sqlparse==0.4.1
