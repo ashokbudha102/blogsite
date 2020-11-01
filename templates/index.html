@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Hero Section-->
+    <section style="background: url({% static 'img/blue.jpg' %}); background-size: cover; background-position: center center" class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7">
+            <h1>Tech Blog- A complete programming blog for programmers</h1><a href="#" class="hero-link">Discover More</a>
+          </div>
+        </div><a href=".intro" class="continue link-scroll"><i class="fa fa-long-arrow-down"></i> Scroll Down</a>
+      </div>
+    </section>
+    <!-- Intro Section-->
+    <section class="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <h2 class="h3">Intro</h2>
+            <p class="text-big">This blog site deals as a complete programming solution site. 
+              You will be provided up with interesting tech articles, projects and many other things. 
+              <strong> Stay connected !!! </strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-posts no-padding-top">
+      <div class="container">
+        <!-- Post-->
+                  <h3>Featured Blogs </h3>
+                  <br>
+                  <hr>
+                  <br>
+        {% for obj in object_list %}
+        <div class="row d-flex align-items-stretch">
+                    {% if not forloop.first and not forloop.last %}
+                    <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+                    {% endif %}
+          <div class="text col-lg-7">
+            <div class="text-inner d-flex align-items-center">
+              <div class="content">
+                <header class="post-header">
+                  <div class="category">
+                    {% for cat in obj.categories.all %}
+                    <a href="#">{{ cat.title }}</a>
+                    {% endfor %}
+                    <a href="post.html">
+                    <h2 class="h4">{{obj.title}}</h2></a>
+                </header>
+                <p>{{ obj.overview }}</p>
+                <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="{{ obj.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>{{ obj.author }}</span></div></a>
+                  <div class="date"><i class="icon-clock"></i> {{ obj.timestamp|timesince }}</div>
+                  <div class="comments"><i class="icon-comment"></i>{{ obj.comment_count }}</div>
+                </footer>
+              </div>
+            </div>
+          </div>
+          {% if forloop.first or forloop.last %}
+          <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+        {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- Divider Section-->
+    <section style="background: url({% static 'img/white.jpg' %}); background-size: cover; background-position: center bottom" class="divider">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h2>Your interactive and creative learning platform</h2><a href="#" class="hero-link">View More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Latest Posts -->
+    <section class="latest-posts"> 
+      <div class="container">
+        <header> 
+          <h2>Latest from the blog</h2>
+          <p class="text-big">Latest from our admins</p>
+        </header>
+        <div class="row">
+          {% for lat in latest %}
+          <div class="post col-md-4">
+            <div class="post-thumbnail"><a href="{{ lat.get_absolute_url }}"><img src="{{post.thumbnail.url}}"><img src="{{ lat.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+            <div class="post-details">
+              <div class="post-meta d-flex justify-content-between">
+                <div class="date">{{ lat.timestamp }}</div>
+                <div class="category">
+                  {% for cat in lat.categories.all %}
+                  <a href="#">{{cat.title}}</a>
+                {% endfor %}
+                </div>
+              </div><a href="lat.get_absolute_url">
+                <h3 class="h4">{{ lat.title }}</h3></a>
+              <p class="text-muted">{{ lat.overview }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- Newsletter Section-->
+    <section class="newsletter no-padding-top">    
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Subscribe to Newsletter</h2>
+            <p class="text-big">Stay connected with us and get the update of every new course, projects or blogs !!!</p>
+          </div>
+          <div class="col-md-8">
+            <div class="form-holder">
+              <form action="." method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="email" name="email" id="email" placeholder="Type your email address">
+                  <button type="submit" class="submit">Subscribe</button>
+                </div>
+              </form>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer-->
+{% endblock content %}
