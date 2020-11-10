@@ -138,3 +138,6 @@ CKEDITOR_CONFIGS = {
         'extraPlugins': 'codesnippet',
     },
 }
+
+USE_TZ = True
+TIME_ZONE = 'ASIA/KATHMANDU'

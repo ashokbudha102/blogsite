@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from post.views import index, blog,post,search,post_update,post_delete,post_create
+from post.views import index, blog,post,search,post_update,post_delete,post_create,cat_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('post/<id>/delete/', post_delete,name='post-delete'),
     path('create/', post_create,name='post-create'),
     path('search/',search,name='search'),
+    path('<id>/',cat_view,name='catview'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

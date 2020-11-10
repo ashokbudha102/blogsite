@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} Tech Blogger: A complete blogging site for programmers {% endblock title %}
 {% block content %}
     <div class="container">
       <div class="row">
@@ -15,7 +16,7 @@
                   <div class="post-meta d-flex justify-content-between">
                     <div class="category">
                       {% for cat in post.categories.all %}
-                      <a href="#">{{ cat.title }}</a>
+                      <a href="{% url 'catview' cat.id %}">{{ cat.title }}</a>
                     {% endfor %}
                       </div>
                       <div>

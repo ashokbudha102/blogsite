@@ -1,13 +1,16 @@
 from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import Post,Comment,Author
+from .models import Post,Comment,Author,Category
 from .forms import CommentForm,PostForm
 from marketing.models import Signup
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse
+
+
 def category_count():
-    queryset=Post.objects.values('categories__title').annotate(Count('categories__title'))
+    queryset = Post.objects.values(
+        'categories__title').annotate(Count('categories__title'))
     return queryset
 
 def get_author(user):
@@ -48,6 +51,7 @@ def blog(request):
     most_recent = Post.objects.order_by('-timestamp')[0:3]
     page_request_var='page'
     page=request.GET.get(page_request_var)
+    # categories=Category.objects.all()
     try:
         paginator_queryset=paginator.page(page)
     except PageNotAnInteger:
@@ -106,3 +110,13 @@ def post_delete(request, id):
     post.delete()
     return redirect(reverse("post-list"))
 
+
+def cat_view(request,id):
+    post=Post.objects.filter(categories__id=id)
+    category=Category.objects.get(id=id)
+    most_recent = Post.objects.order_by('-timestamp')[0:3]
+    catcount = category_count()
+    context = {'posts': post, 'cat': category,
+               'category_count': catcount, 'most_recent': most_recent}
+
+    return render(request, 'category.html',context)
